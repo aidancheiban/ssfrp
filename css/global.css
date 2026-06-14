@@ -33,7 +33,7 @@ a {
   top: 0;
   width: 100%;
   z-index: 20;
-  padding: 1rem 2rem;
+  padding: 1rem 0;
   transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -44,8 +44,8 @@ a {
 }
 
 .navbar {
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
+  padding: 0 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -93,7 +93,8 @@ a {
   overflow: hidden;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-left: min(8vw, 4rem);
 }
 
 .hero-video {
@@ -124,10 +125,11 @@ a {
 }
 
 .hero-content {
-  max-width: 1000px;
-  padding: 0 2rem;
+  max-width: 700px;
+  margin-left: 0;
+  padding: 0 2rem 0 0;
   color: white;
-  text-align: center;
+  text-align: left;
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
@@ -155,7 +157,7 @@ a {
 
 .hero-buttons {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 1rem;
   margin-top: 2rem;
   flex-wrap: wrap;
