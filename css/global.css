@@ -453,6 +453,118 @@ a {
 }
 
 /* =========================
+   Apply Roles
+========================= */
+
+.apply-roles-section {
+  background: white;
+  position: relative;
+  z-index: 5;
+}
+
+.apply-roles-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.35fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+.role-picker {
+  position: sticky;
+  top: 6.5rem;
+}
+
+.role-picker h2,
+.application-details h2 {
+  color: #1D4F91;
+  line-height: 1.08;
+  margin-bottom: 1.4rem;
+}
+
+.role-picker h2 {
+  font-size: clamp(1.9rem, 3vw, 3rem);
+}
+
+.application-details h2 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+}
+
+.role-card,
+.detail-block {
+  border: 1px solid #dce6f0;
+  border-radius: 8px;
+}
+
+.role-card {
+  background: #f4f8fb;
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
+.role-eyebrow {
+  display: block;
+  color: #5b7894;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.55rem;
+}
+
+.role-card h3 {
+  color: #1D4F91;
+  font-size: 1.55rem;
+  margin-bottom: 0.65rem;
+}
+
+.role-card p,
+.detail-block p {
+  color: #45546a;
+  font-size: 1rem;
+}
+
+.detail-block {
+  background: #f4f8fb;
+  padding: clamp(1.5rem, 4vw, 2.4rem);
+}
+
+.detail-block + .detail-block {
+  margin-top: 1.2rem;
+}
+
+.detail-block.compact {
+  background: white;
+}
+
+.requirements-list {
+  list-style: none;
+  margin-top: 1.7rem;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.requirements-list li {
+  position: relative;
+  padding-left: 1.4rem;
+  color: #45546a;
+}
+
+.requirements-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 0.48rem;
+  height: 0.48rem;
+  border-radius: 50%;
+  background: #1D4F91;
+}
+
+.two-column-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* =========================
    Project Cards
 ========================= */
 
@@ -1223,6 +1335,18 @@ body.reveal-on .reveal.visible {
   }
 
   .site-panel.is-active {
+    grid-template-columns: 1fr;
+  }
+
+  .apply-roles-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .role-picker {
+    position: static;
+  }
+
+  .two-column-list {
     grid-template-columns: 1fr;
   }
 }
