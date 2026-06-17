@@ -5,13 +5,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SSFRP at LDEO</title>
 
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <link rel="stylesheet" href="css/global.css" />
 </head>
 <body>
 
+  <!-- scroll-driven growth rail (forest canopy at top, roots at the bottom) -->
+  <div class="growth-rail" aria-hidden="true">
+    <svg class="growth-trunk" viewBox="0 0 60 1000" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="trunkGrad" x1="0" y1="0" x2="0" y2="1000" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#a7ecc0" />
+          <stop offset="0.5" stop-color="#3f8f5c" />
+          <stop offset="1" stop-color="#6b4f2a" />
+        </linearGradient>
+      </defs>
+      <path class="trunk-path" d="M30 0 L30 1000" />
+    </svg>
+    <span class="growth-tip"></span>
+
+    <span class="branch" style="top:12%; --r:-3deg; --s:1">
+      <svg viewBox="0 0 64 46" style="animation-delay:-0.4s"><path class="branch-stem" pathLength="1" d="M3 43 C22 39 36 31 48 12" /><path class="branch-leaf" d="M48 12 C41 2 49 -6 62 -3 63 11 56 19 48 12Z" /></svg>
+    </span>
+    <span class="branch" style="top:26%; --r:5deg; --s:0.82; --leaf:#5fb079">
+      <svg viewBox="0 0 64 46" style="animation-delay:-2.1s"><path class="branch-stem" pathLength="1" d="M3 43 C22 39 36 31 48 12" /><path class="branch-leaf" d="M48 12 C41 2 49 -6 62 -3 63 11 56 19 48 12Z" /></svg>
+    </span>
+    <span class="branch" style="top:40%; --r:-6deg; --s:0.95">
+      <svg viewBox="0 0 64 46" style="animation-delay:-3.7s"><path class="branch-stem" pathLength="1" d="M3 43 C22 39 36 31 48 12" /><path class="branch-leaf" d="M48 12 C41 2 49 -6 62 -3 63 11 56 19 48 12Z" /></svg>
+    </span>
+    <span class="branch" style="top:55%; --r:3deg; --s:0.88; --leaf:#5fb079">
+      <svg viewBox="0 0 64 46" style="animation-delay:-1.3s"><path class="branch-stem" pathLength="1" d="M3 43 C22 39 36 31 48 12" /><path class="branch-leaf" d="M48 12 C41 2 49 -6 62 -3 63 11 56 19 48 12Z" /></svg>
+    </span>
+    <span class="branch" style="top:70%; --r:-4deg; --s:0.78">
+      <svg viewBox="0 0 64 46" style="animation-delay:-5.2s"><path class="branch-stem" pathLength="1" d="M3 43 C22 39 36 31 48 12" /><path class="branch-leaf" d="M48 12 C41 2 49 -6 62 -3 63 11 56 19 48 12Z" /></svg>
+    </span>
+
+    <svg class="growth-roots" viewBox="0 0 60 72" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="rootGrad" x1="0" y1="0" x2="0" y2="72" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#6b4f2a" />
+          <stop offset="1" stop-color="#3a2913" />
+        </linearGradient>
+      </defs>
+      <path d="M30 0 V16 M30 16 C24 32 16 38 8 56 M30 16 C36 32 44 38 52 56 M30 16 C27 36 22 46 13 70 M30 16 C33 36 38 46 47 70 M30 16 V72" />
+    </svg>
+  </div>
+
   <header class="site-header">
     <nav class="navbar">
-      <a href="index.html" class="logo">Secondary School Field Research Program</a>
+      <a href="index.html" class="logo">
+        <img class="brand-mark" src="assests/images/columbia-crown.jpeg" alt="Columbia University crown" />
+        <span>Secondary School Field Research Program</span>
+      </a>
 
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
@@ -38,10 +83,17 @@
       </video>
 
       <div class="hero-overlay"></div>
+      <div class="hero-map" aria-hidden="true"><div id="hero-map"></div></div>
+      <p class="map-credit" aria-hidden="true">Satellite imagery &copy; Esri</p>
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="lens-hud" aria-hidden="true">
+        <span class="lens-readout">41.0043&deg; N, 73.9091&deg; W</span>
+        <span class="lens-place">Lamont-Doherty Earth Observatory &middot; Palisades, NY</span>
+      </div>
 
       <div class="hero-content">
         <p class="hero-label">Lamont-Doherty Earth Observatory</p>
-        <h1>Secondary School Field Research Program</h1>
+        <h1 id="hero-title" data-from="Columbia University">Secondary School Field Research Program</h1>
         <p class="hero-description">
           Hands-on field research, data collection, and environmental science for high school students.
         </p>
@@ -68,6 +120,106 @@
           to work with mentors, collect field data, analyze results, and contribute
           to research connected to Earth and environmental science.
         </p>
+        <br />
+        <p>
+          SSFRP runs each summer at Lamont-Doherty Earth Observatory. High school
+          students, undergraduates, and Columbia scientists work in small research
+          teams, with Piermont Marsh in the Hudson estuary serving as the main field
+          site. Each team studies one project from start to finish and presents its
+          findings at the end-of-summer symposium.
+        </p>
+      </div>
+    </section>
+
+    <!-- Stats band -->
+    <section class="stats-band">
+      <div class="stats-inner">
+        <div class="stat">
+          <span class="stat-num">2005</span>
+          <span class="stat-label">Founded</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num counter" data-target="20">0</span>
+          <span class="stat-label">Years running</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num counter" data-target="3">0</span>
+          <span class="stat-label">Field sites</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num counter" data-target="10">0</span>
+          <span class="stat-label">Research teams</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive field sites -->
+    <section class="sites-section">
+      <div class="section-container">
+        <p class="section-label">Where We Work</p>
+        <h2>Explore our field sites</h2>
+
+        <div class="sites-explorer">
+          <div class="site-tabs">
+            <button class="site-tab is-active" data-site="forest">Lamont Sanctuary Forest</button>
+            <button class="site-tab" data-site="marsh">Piermont Marsh</button>
+            <button class="site-tab" data-site="nyc">New York City</button>
+          </div>
+
+          <div class="site-panels">
+            <article class="site-panel is-active" id="site-forest">
+              <div class="image-placeholder site-image">Image Placeholder — Lamont Sanctuary Forest</div>
+              <div class="site-copy">
+                <h3>Lamont Sanctuary Forest</h3>
+                <p>
+                  A temperate forest in Palisades, NY surrounding the Lamont-Doherty campus.
+                  In 2024 the program set up a one-hectare research plot here to track soil
+                  and forest health over time.
+                </p>
+                <ul class="site-facts">
+                  <li><strong>Location</strong> Palisades, NY</li>
+                  <li><strong>Research plot</strong> 1 hectare, since 2024</li>
+                  <li><strong>Trees</strong> red oak, maple, tulip, white pine</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="site-panel" id="site-marsh">
+              <div class="image-placeholder site-image">Image Placeholder — Piermont Marsh</div>
+              <div class="site-copy">
+                <h3>Piermont Marsh</h3>
+                <p>
+                  A brackish wetland 40 km north of NYC where salt and fresh water mix. It
+                  floods 10 to 12 times a month, and its sediment dates back before European
+                  arrival in the 1400s. Today the invasive reed Phragmites australis covers
+                  most of the marsh surface.
+                </p>
+                <ul class="site-facts">
+                  <li><strong>Distance</strong> 40 km north of NYC</li>
+                  <li><strong>Tides</strong> floods 10–12 times a month</li>
+                  <li><strong>Phragmites cover</strong> 90–95% of the surface</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="site-panel" id="site-nyc">
+              <div class="image-placeholder site-image">Image Placeholder — New York City</div>
+              <div class="site-copy">
+                <h3>New York City</h3>
+                <p>
+                  Across the five boroughs and one of the oldest subway systems in the world,
+                  the air pollution team has collected PM2.5 data since 2021, connecting air
+                  quality to asthma exposure for the more than 8 million people who live here.
+                </p>
+                <ul class="site-facts">
+                  <li><strong>Population</strong> 8 million+</li>
+                  <li><strong>Boroughs</strong> 5</li>
+                  <li><strong>Collecting data since</strong> 2021</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -79,6 +231,7 @@
 
         <div class="cards-grid">
           <article class="info-card">
+            <div class="image-placeholder card-media">Image Placeholder</div>
             <h3>Field Research</h3>
             <p>
               Students participate in hands-on research projects involving real data,
@@ -87,6 +240,7 @@
           </article>
 
           <article class="info-card">
+            <div class="image-placeholder card-media">Image Placeholder</div>
             <h3>Mentorship</h3>
             <p>
               Students work with Columbia researchers and team leads who guide them through the
@@ -95,6 +249,7 @@
           </article>
 
           <article class="info-card">
+            <div class="image-placeholder card-media">Image Placeholder</div>
             <h3>Final Presentation</h3>
             <p>
               Students will practice and improve their public speaking through weekly presentations. 
@@ -102,6 +257,32 @@
             </p>
           </article>
         </div>
+      </div>
+    </section>
+
+    <!-- Observatory video -->
+    <section class="video-section">
+      <div class="section-container">
+        <p class="section-label">The Observatory</p>
+        <h2>75 years of discovery at Lamont-Doherty</h2>
+        <p class="video-intro">
+          SSFRP is based at Lamont-Doherty Earth Observatory in Palisades, NY, a research
+          center of the Columbia Climate School. Watch the observatory's story below, or
+          head to their channel for more.
+        </p>
+
+        <a
+          class="video-frame video-poster"
+          href="https://www.youtube.com/watch?v=O3ga5n5yonw"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Play: Lamont-Doherty Earth Observatory, Decades of Discovery"
+        >
+          <img src="https://img.youtube.com/vi/O3ga5n5yonw/hqdefault.jpg" alt="Lamont-Doherty Earth Observatory" loading="lazy" />
+          <span class="play-button" aria-hidden="true"></span>
+        </a>
+
+        <a class="video-link" href="https://www.youtube.com/channel/UCfmqyDo5E0LKVw9OmOvXUGw" target="_blank" rel="noopener noreferrer">Visit the LDEO YouTube channel →</a>
       </div>
     </section>
 
@@ -123,11 +304,12 @@
         </p>
         <p>
         Website designed and developed by <a href="https://www.linkedin.com/in/aidancheiban/" target="_blank" rel="noopener noreferrer">Aidan Cheiban</a>, 
-        <a href="https://www.linkedin.com/in/antounelabd/" target="_blank" rel="noopener noreferrer">Antoun Elabd</a>, and 
+        <a href="https://www.linkedin.com/in/antounelabd/" target="_blank" rel="noopener noreferrer">Anton Faris</a>, and 
         <a href="https://www.linkedin.com/in/mohamedsalahyoussef/" target="_blank" rel="noopener noreferrer">Mohamed Youssef</a>.
     </p>
   </footer>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <script src="js/main.js"></script>
 </body>
 </html>
