@@ -457,111 +457,123 @@ a {
 ========================= */
 
 .apply-roles-section {
-  background: white;
+  background: #f4f8fb;
   position: relative;
   z-index: 5;
 }
 
 .apply-roles-layout {
   display: grid;
-  grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.35fr);
-  gap: 2rem;
-  align-items: start;
+  grid-template-columns: minmax(360px, 0.92fr) minmax(420px, 1.08fr);
+  gap: clamp(3rem, 7vw, 7rem);
+  align-items: stretch;
+  max-width: 1200px;
 }
 
-.role-picker {
-  position: sticky;
-  top: 6.5rem;
+.apply-copy-panel {
+  max-width: 620px;
 }
 
-.role-picker h2,
-.application-details h2 {
+.apply-copy-panel h2,
+.apply-visual-box h2 {
   color: #1D4F91;
   line-height: 1.08;
-  margin-bottom: 1.4rem;
 }
 
-.role-picker h2 {
-  font-size: clamp(1.9rem, 3vw, 3rem);
+.apply-copy-panel > h2 {
+  font-size: clamp(2rem, 3.5vw, 3.2rem);
+  margin-bottom: 1.25rem;
 }
 
-.application-details h2 {
-  font-size: clamp(2rem, 4vw, 3.5rem);
+.position-group {
+  margin-top: 1.35rem;
 }
 
-.role-card,
-.detail-block {
-  border: 1px solid #dce6f0;
-  border-radius: 8px;
+.position-group h3 {
+  color: #16202e;
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
 }
 
-.role-card {
-  background: #f4f8fb;
-  padding: 1.5rem;
-  margin-top: 1rem;
+.position-group p,
+.requirements-group p,
+.apply-visual-box p {
+  color: #45546a;
+  font-size: 1.02rem;
 }
 
 .role-eyebrow {
   display: block;
-  color: #5b7894;
-  font-size: 0.74rem;
+  color: #1D4F91;
+  font-size: 0.82rem;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+
+.requirements-group {
+  margin-top: 2rem;
+  padding-top: 1.8rem;
+  border-top: 1px solid #dce6f0;
+}
+
+.requirements-group h2 {
+  color: #16202e;
+  font-size: clamp(1.7rem, 2.5vw, 2.2rem);
   margin-bottom: 0.55rem;
 }
 
-.role-card h3 {
-  color: #1D4F91;
-  font-size: 1.55rem;
-  margin-bottom: 0.65rem;
-}
-
-.role-card p,
-.detail-block p {
-  color: #45546a;
-  font-size: 1rem;
-}
-
-.detail-block {
-  background: #f4f8fb;
-  padding: clamp(1.5rem, 4vw, 2.4rem);
-}
-
-.detail-block + .detail-block {
-  margin-top: 1.2rem;
-}
-
-.detail-block.compact {
-  background: white;
+.requirements-group.compact {
+  margin-top: 1.3rem;
+  padding-top: 1.2rem;
 }
 
 .requirements-list {
-  list-style: none;
-  margin-top: 1.7rem;
+  margin-top: 0.7rem;
+  padding-left: 1.15rem;
   display: grid;
-  gap: 0.85rem;
+  gap: 0.35rem;
 }
 
 .requirements-list li {
-  position: relative;
-  padding-left: 1.4rem;
   color: #45546a;
 }
 
-.requirements-list li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.72em;
-  width: 0.48rem;
-  height: 0.48rem;
-  border-radius: 50%;
-  background: #1D4F91;
+.apply-visual-panel {
+  min-height: 540px;
+  display: flex;
 }
 
-.two-column-list {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+.apply-visual-box {
+  width: 100%;
+  min-height: 100%;
+  padding: clamp(2rem, 5vw, 3.5rem);
+  border: 1px solid #cdddec;
+  border-radius: 8px;
+  background:
+    linear-gradient(rgba(244, 248, 251, 0.86), rgba(244, 248, 251, 0.86)),
+    repeating-linear-gradient(
+      -45deg,
+      #ffffff,
+      #ffffff 16px,
+      #edf4fa 16px,
+      #edf4fa 32px
+    );
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.apply-visual-box h2 {
+  font-size: clamp(2rem, 3vw, 3.1rem);
+  margin-bottom: 0.8rem;
+}
+
+.apply-visual-box p {
+  max-width: 420px;
+  margin-bottom: 1.5rem;
 }
 
 /* =========================
@@ -1340,14 +1352,15 @@ body.reveal-on .reveal.visible {
 
   .apply-roles-layout {
     grid-template-columns: 1fr;
+    gap: 2.5rem;
   }
 
-  .role-picker {
-    position: static;
+  .apply-copy-panel {
+    max-width: none;
   }
 
-  .two-column-list {
-    grid-template-columns: 1fr;
+  .apply-visual-panel {
+    min-height: 360px;
   }
 }
 
