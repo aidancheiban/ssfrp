@@ -464,116 +464,124 @@ a {
 
 .apply-roles-layout {
   display: grid;
-  grid-template-columns: minmax(360px, 0.92fr) minmax(420px, 1.08fr);
-  gap: clamp(3rem, 7vw, 7rem);
-  align-items: stretch;
-  max-width: 1200px;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.35fr);
+  gap: 2rem;
+  align-items: start;
+  max-width: 1100px;
 }
 
 .apply-copy-panel {
-  max-width: 620px;
+  position: sticky;
+  top: 6.5rem;
 }
 
 .apply-copy-panel h2,
-.apply-visual-box h2 {
+.application-details h2 {
   color: #1D4F91;
   line-height: 1.08;
 }
 
 .apply-copy-panel > h2 {
-  font-size: clamp(2rem, 3.5vw, 3.2rem);
-  margin-bottom: 1.25rem;
+  font-size: clamp(1.9rem, 3vw, 3rem);
+  margin-bottom: 1.4rem;
 }
 
-.position-group {
-  margin-top: 1.35rem;
+.role-option {
+  width: 100%;
+  display: block;
+  text-align: left;
+  background: #f4f8fb;
+  border: 1px solid #dce6f0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
-.position-group h3 {
-  color: #16202e;
-  font-size: 1.2rem;
-  margin-bottom: 0.25rem;
+.role-option:hover {
+  transform: translateY(-3px);
+  border-color: #b9cde0;
 }
 
-.position-group p,
-.requirements-group p,
-.apply-visual-box p {
+.role-option.is-active {
+  background: white;
+  border-color: #1D4F91;
+  box-shadow: 0 18px 35px rgba(29, 79, 145, 0.12);
+}
+
+.role-option h3 {
+  color: #1D4F91;
+  font-family: inherit;
+  font-size: 1.55rem;
+  margin-bottom: 0.65rem;
+}
+
+.role-option p,
+.role-detail p {
   color: #45546a;
-  font-size: 1.02rem;
+  font-family: inherit;
+  font-size: 1rem;
 }
 
 .role-eyebrow {
   display: block;
-  color: #1D4F91;
-  font-size: 0.82rem;
+  color: #5b7894;
+  font-size: 0.74rem;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  margin-bottom: 0.2rem;
-}
-
-.requirements-group {
-  margin-top: 2rem;
-  padding-top: 1.8rem;
-  border-top: 1px solid #dce6f0;
-}
-
-.requirements-group h2 {
-  color: #16202e;
-  font-size: clamp(1.7rem, 2.5vw, 2.2rem);
   margin-bottom: 0.55rem;
 }
 
-.requirements-group.compact {
-  margin-top: 1.3rem;
-  padding-top: 1.2rem;
+.application-details {
+  min-height: 430px;
+}
+
+.role-detail {
+  display: none;
+  background: #f4f8fb;
+  border: 1px solid #dce6f0;
+  border-radius: 8px;
+  padding: clamp(1.5rem, 4vw, 2.4rem);
+}
+
+.role-detail.is-active {
+  display: block;
+  animation: panelFade 0.35s ease;
+}
+
+.role-detail h2 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  margin-bottom: 1.4rem;
+}
+
+.role-detail .btn {
+  margin-top: 1.8rem;
 }
 
 .requirements-list {
-  margin-top: 0.7rem;
-  padding-left: 1.15rem;
+  list-style: none;
+  margin-top: 1.7rem;
   display: grid;
-  gap: 0.35rem;
+  gap: 0.85rem;
 }
 
 .requirements-list li {
+  position: relative;
+  padding-left: 1.4rem;
   color: #45546a;
 }
 
-.apply-visual-panel {
-  min-height: 540px;
-  display: flex;
-}
-
-.apply-visual-box {
-  width: 100%;
-  min-height: 100%;
-  padding: clamp(2rem, 5vw, 3.5rem);
-  border: 1px solid #cdddec;
-  border-radius: 8px;
-  background:
-    linear-gradient(rgba(244, 248, 251, 0.86), rgba(244, 248, 251, 0.86)),
-    repeating-linear-gradient(
-      -45deg,
-      #ffffff,
-      #ffffff 16px,
-      #edf4fa 16px,
-      #edf4fa 32px
-    );
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
-}
-
-.apply-visual-box h2 {
-  font-size: clamp(2rem, 3vw, 3.1rem);
-  margin-bottom: 0.8rem;
-}
-
-.apply-visual-box p {
-  max-width: 420px;
-  margin-bottom: 1.5rem;
+.requirements-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 0.48rem;
+  height: 0.48rem;
+  border-radius: 50%;
+  background: #1D4F91;
 }
 
 /* =========================
@@ -1352,15 +1360,15 @@ body.reveal-on .reveal.visible {
 
   .apply-roles-layout {
     grid-template-columns: 1fr;
-    gap: 2.5rem;
+    gap: 1.4rem;
   }
 
   .apply-copy-panel {
-    max-width: none;
+    position: static;
   }
 
-  .apply-visual-panel {
-    min-height: 360px;
+  .application-details {
+    min-height: 0;
   }
 }
 
