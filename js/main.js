@@ -1,6 +1,28 @@
 const heroContent = document.querySelector(".hero-content");
 const heroVideo = document.querySelector(".hero-video");
 const header = document.querySelector(".site-header");
+const navToggle = document.querySelector(".nav-toggle");
+const navLinks = document.querySelector(".nav-links");
+
+if (navToggle && navLinks && header) {
+  navToggle.addEventListener("click", () => {
+    const isOpen = navLinks.classList.toggle("is-open");
+    navToggle.classList.toggle("is-open", isOpen);
+    navToggle.setAttribute("aria-expanded", String(isOpen));
+    navToggle.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
+    header.classList.toggle("menu-open", isOpen);
+  });
+
+  navLinks.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      navLinks.classList.remove("is-open");
+      navToggle.classList.remove("is-open");
+      navToggle.setAttribute("aria-expanded", "false");
+      navToggle.setAttribute("aria-label", "Open navigation menu");
+      header.classList.remove("menu-open");
+    });
+  });
+}
 
 window.addEventListener("scroll", () => {
   const scrollY = window.scrollY;
@@ -8,17 +30,23 @@ window.addEventListener("scroll", () => {
   // Fade hero content as user scrolls
   const fadeAmount = Math.max(1 - scrollY / 500, 0);
 
-  heroContent.style.opacity = fadeAmount;
-  heroContent.style.transform = `translateY(${scrollY * 0.15}px)`;
+  if (heroContent) {
+    heroContent.style.opacity = fadeAmount;
+    heroContent.style.transform = `translateY(${scrollY * 0.15}px)`;
+  }
 
   // Fade video slightly as user scrolls
-  heroVideo.style.opacity = Math.max(0.85 - scrollY / 700, 0);
+  if (heroVideo) {
+    heroVideo.style.opacity = Math.max(0.85 - scrollY / 700, 0);
+  }
 
   // Change navbar once scrolling starts
-  if (scrollY > 80) {
-    header.classList.add("scrolled");
-  } else {
-    header.classList.remove("scrolled");
+  if (header) {
+    if (scrollY > 80) {
+      header.classList.add("scrolled");
+    } else {
+      header.classList.remove("scrolled");
+    }
   }
 });
 
