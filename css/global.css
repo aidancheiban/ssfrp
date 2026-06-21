@@ -516,6 +516,94 @@ a {
    Apply Roles
 ========================= */
 
+.application-timeline-section {
+  background: white;
+  position: relative;
+  z-index: 5;
+}
+
+.application-timeline-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.2fr);
+  gap: 3rem;
+  align-items: start;
+}
+
+.timeline-intro h2 {
+  color: #1D4F91;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1.06;
+  margin-bottom: 1.2rem;
+}
+
+.timeline-intro p {
+  color: #45546a;
+  font-size: 1.08rem;
+}
+
+.timeline-list {
+  list-style: none;
+  position: relative;
+  display: grid;
+  gap: 1.2rem;
+}
+
+.timeline-list::before {
+  content: "";
+  position: absolute;
+  left: 0.58rem;
+  top: 0.8rem;
+  bottom: 0.8rem;
+  width: 2px;
+  background: #dce6f0;
+}
+
+.timeline-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.3rem 1fr;
+  gap: 1rem;
+}
+
+.timeline-marker {
+  position: relative;
+  z-index: 1;
+  width: 1.15rem;
+  height: 1.15rem;
+  margin-top: 0.55rem;
+  border: 3px solid #1D4F91;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 0 0 5px white;
+}
+
+.timeline-card {
+  border: 1px solid #dce6f0;
+  border-radius: 8px;
+  padding: 1.4rem;
+  background: #f4f8fb;
+}
+
+.timeline-date {
+  color: #5b7894;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.35rem;
+  text-transform: uppercase;
+}
+
+.timeline-card h3 {
+  color: #1D4F91;
+  font-size: 1.25rem;
+  line-height: 1.2;
+  margin-bottom: 0.45rem;
+}
+
+.timeline-card p:last-child {
+  color: #45546a;
+}
+
 .apply-roles-section {
   background: #f4f8fb;
   position: relative;
@@ -1465,6 +1553,11 @@ body.reveal-on .reveal.visible {
 
   .site-panel.is-active {
     grid-template-columns: 1fr;
+  }
+
+  .application-timeline-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
   }
 
   .apply-roles-layout {
