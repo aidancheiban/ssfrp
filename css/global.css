@@ -420,6 +420,74 @@ a {
 }
 
 /* =========================
+   Support & Acknowledgements
+========================= */
+
+.support-section {
+  background: #f4f8fb;
+}
+
+.support-section h2 {
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1.05;
+  margin-bottom: 1.5rem;
+  color: #1D4F91;
+}
+
+.support-intro {
+  max-width: 760px;
+  font-size: 1.15rem;
+  color: #45546a;
+}
+
+.support-logos {
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+}
+
+.support-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  background: white;
+  padding: 1.8rem 1.25rem;
+  border-radius: 20px;
+  border: 1px solid #dce6f0;
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.support-logo:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.08);
+}
+
+.support-logo img {
+  height: 60px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.support-logo span {
+  margin-top: 1rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #45546a;
+}
+
+.support-note {
+  margin-top: 2rem;
+  max-width: 760px;
+  font-size: 1rem;
+  color: #45546a;
+}
+
+/* =========================
    Apply Preview
 ========================= */
 
@@ -1566,6 +1634,10 @@ body.reveal-on .reveal.visible {
 
   .cards-grid {
     grid-template-columns: 1fr;
+  }
+
+  .support-logos {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .project-grid {
