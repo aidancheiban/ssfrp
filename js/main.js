@@ -116,8 +116,7 @@ const observer = new IntersectionObserver(
 
 revealEls.forEach((el) => observer.observe(el));
 
-// Hero title decodes into place. Each letter sits in a slot locked to its final
-// width, so swapping glyphs never reflows the line or pushes text off-screen.
+// each letter locks to a fixed-width slot so the scramble doesn't reflow the line
 function decodeTitle(el) {
   const finalText = el.textContent.trim();
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -169,8 +168,7 @@ function decodeTitle(el) {
 const title = document.getElementById("hero-title");
 if (title) setTimeout(() => decodeTitle(title), 500);
 
-// Hero magnifier: a lens that lifts the video to reveal a live satellite map of
-// the Lamont campus underneath, with a readout of the coordinates under the cursor.
+// lens reveals the campus map under the video with a coord readout at the cursor
 const hero = document.querySelector(".hero");
 const finePointer = window.matchMedia("(pointer: fine)").matches;
 const campus = [41.0043, -73.9091];
@@ -205,7 +203,7 @@ if (mapEl && window.L && finePointer) {
   L.marker(campus, { icon: pin, interactive: false }).addTo(campusMap);
 
   hero.classList.add("map-ready");
-  // Leaflet measures the container on creation; the hero is mid-entrance animation then
+  // hero is still animating in so remeasure once it settles
   setTimeout(() => campusMap.invalidateSize(), 200);
   window.addEventListener("resize", () => campusMap.invalidateSize());
 }
@@ -237,8 +235,7 @@ if (hero && finePointer) {
   hero.addEventListener("mouseleave", () => hero.classList.remove("lens-active"));
 }
 
-// Growth rail: trunk draws downward as you scroll, a tip leads the way,
-// then branches and roots grow in
+// trunk draws down as you scroll
 const rail = document.querySelector(".growth-rail");
 if (rail) {
   const trunk = rail.querySelector(".trunk-path");
@@ -249,14 +246,15 @@ if (rail) {
   trunk.style.strokeDasharray = len;
   trunk.style.strokeDashoffset = len;
 
-  const marks = [0.1, 0.24, 0.4, 0.56, 0.72];
-
   function grow() {
     const max = document.documentElement.scrollHeight - window.innerHeight;
     const p = max > 0 ? Math.min(window.scrollY / max, 1) : 1;
     trunk.style.strokeDashoffset = len * (1 - p);
-    tip.style.top = `${p * 100}vh`;
-    branches.forEach((b, i) => b.classList.toggle("grown", p >= marks[i]));
+
+    // each leaf opens once the bud reaches it
+    const budY = p * window.innerHeight;
+    tip.style.top = `${budY}px`;
+    branches.forEach((b) => b.classList.toggle("grown", budY >= b.offsetTop + 38));
     roots.classList.toggle("grown", p >= 0.9);
   }
 
